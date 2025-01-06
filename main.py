@@ -7,6 +7,7 @@ import re
 from keep_alive import keep_alive
 
 keep_alive()
+keep_alive()
 
 bot = telebot.TeleBot(os.environ.get('token'))
 
