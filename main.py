@@ -175,13 +175,13 @@ def close_panel(call):
     else:
         bot.answer_callback_query(call.id, "❗️ پنل باز نشده است.")
 
+# Handle photos sent to the bot
 @bot.message_handler(content_types=['photo'])
 def handle_photos(message):
-    # Check if message is from private chat
-    if message.chat.type != 'private':
-        bot.reply_to(message, "❌ فقط در چت خصوصی می‌توانید عکس ارسال کنید.")
+    # بررسی کنید که آیا پیام از یک گروه ارسال شده است
+    if message.chat.type in ['group', 'supergroup']:
         return
-        
+    
     if message.from_user.username.lower() not in [username.lower() for username in WHITELIST_USERNAMES]:
         bot.reply_to(message, "❌ شما اجازه ارسال عکس برای ذخیره‌سازی را ندارید.")
         return
@@ -203,7 +203,9 @@ def handle_photos(message):
         bot.reply_to(message, f"✅ عکس با موفقیت ذخیره شد!\n📂 مسیر فایل: {photo_path}")
     except Exception as e:
         bot.reply_to(message, "❌ مشکلی در ذخیره عکس وجود دارد. لطفاً دوباره تلاش کنید.")
-        print(f"Error saving photo: {str(e)}")# Monitor for deleted messages and restore the panel if it's deleted
+        print(f"Error saving photo: {str(e)}")
+
+# Monitor for deleted messages and restore the panel if it's deleted
 @bot.edited_message_handler(func=lambda message: message.message_id == panel_message_id)
 def monitor_edited_message(message):
     if message.text == "پنل بسته شد.":
