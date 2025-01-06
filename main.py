@@ -5,6 +5,9 @@ import threading
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import re
 import os
+from keep_alive import keep_alive
+
+keep_alive()
 
 bot = telebot.TeleBot(os.environ.get('token'))
 
