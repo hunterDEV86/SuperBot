@@ -4,8 +4,9 @@ import random
 import threading
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import re
+import os
 
-bot = telebot.TeleBot('7917066012:AAFDObppHPP6_X80EEL5HujlD-F_sLGZdbI')
+bot = telebot.TeleBot(os.environ.get('token'))
 
 # Directory for storing photos
 PHOTOS_DIR = 'photos'
