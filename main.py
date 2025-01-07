@@ -85,6 +85,7 @@ def send_photo(message):
                 photo_path = os.path.join(PHOTOS_DIR, random_photo)
                 with open(photo_path, 'rb') as photo:
                     sent_msg = bot.send_photo(message.chat.id, photo, caption="عکس رندوم")
+                    bot.delete_message(message.chat.id, message.message_id)
                     threading.Thread(target=delete_message_later, args=(message.chat.id, sent_msg.message_id)).start()
             else:
                 bot.reply_to(message, "هیچ عکسی در پوشه وجود ندارد!")
